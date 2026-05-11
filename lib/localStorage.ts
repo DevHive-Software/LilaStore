@@ -34,4 +34,7 @@ export const STORAGE_KEYS = {
   NOTIFICATIONS: 'lila_notifications',
   ADMIN_AUTH: 'lila_admin_auth',
   CHECKOUT_ORDER: 'lila_checkout_order',
+  USERS: 'lila_users',
+  CURRENT_USER: 'lila_current_user',
+  SELLER_PROFILES: 'lila_seller_profiles',
 };
