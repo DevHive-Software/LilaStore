@@ -96,3 +96,34 @@ export interface Toast {
   title: string;
   message: string;
 }
+
+/* ─── Users ─── */
+
+export type UserRole = 'comprador' | 'vendedor';
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  role: UserRole;
+  phone?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  avatar?: string;
+  createdAt: string;
+  active: boolean;
+}
+
+export interface SellerProfile {
+  userId: string;
+  storeName: string;
+  storeDescription: string;
+  bankName?: string;
+  bankAccount?: string;
+  bankClabe?: string;
+  totalSales: number;
+  totalRevenue: number;
+  createdAt: string;
+}
