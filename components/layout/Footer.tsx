@@ -102,7 +102,7 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-2 text-gray-400 text-sm">
                 <MapPin size={14} className="text-lila-400 shrink-0 mt-0.5" />
-                <span>Ciudad de México, México</span>
+                <span>Tlahuelilpan, Hidalgo, México</span>
               </li>
             </ul>
           </div>
