@@ -9,6 +9,7 @@ import { Toast } from '@/components/ui/Toast';
 import { useCartStore } from '@/store/cartStore';
 import { useNotificationStore } from '@/store/notificationStore';
 import { useAuthStore } from '@/store/authStore';
+import { useUserStore } from '@/store/userStore';
 import { storage, STORAGE_KEYS } from '@/lib/localStorage';
 import { demoProducts, demoCategories } from '@/lib/demoData';
 
@@ -16,39 +17,32 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const { loadFromStorage: loadCart } = useCartStore();
   const { loadFromStorage: loadNotifications } = useNotificationStore();
   const { loadFromStorage: loadAuth } = useAuthStore();
+  const { loadFromStorage: loadUser } = useUserStore();
 
   useEffect(() => {
-    // Initialize stores from localStorage
     loadCart();
     loadNotifications();
     loadAuth();
+    loadUser();
 
-    // Seed demo data if not present
     const existingProducts = storage.get(STORAGE_KEYS.PRODUCTS, null);
-    if (!existingProducts) {
-      storage.set(STORAGE_KEYS.PRODUCTS, demoProducts);
-    }
+    if (!existingProducts) storage.set(STORAGE_KEYS.PRODUCTS, demoProducts);
 
     const existingCategories = storage.get(STORAGE_KEYS.CATEGORIES, null);
-    if (!existingCategories) {
-      storage.set(STORAGE_KEYS.CATEGORIES, demoCategories);
-    }
-  }, [loadCart, loadNotifications, loadAuth]);
+    if (!existingCategories) storage.set(STORAGE_KEYS.CATEGORIES, demoCategories);
+  }, [loadCart, loadNotifications, loadAuth, loadUser]);
 
   // Cross-tab sync
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === STORAGE_KEYS.CART) {
-        loadCart();
-      }
-      if (e.key === STORAGE_KEYS.NOTIFICATIONS) {
-        loadNotifications();
-      }
+      if (e.key === STORAGE_KEYS.CART) loadCart();
+      if (e.key === STORAGE_KEYS.NOTIFICATIONS) loadNotifications();
+      if (e.key === STORAGE_KEYS.CURRENT_USER) loadUser();
     };
 
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
-  }, [loadCart, loadNotifications]);
+  }, [loadCart, loadNotifications, loadUser]);
 
   return (
     <>
